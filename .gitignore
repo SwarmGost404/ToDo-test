@@ -1,0 +1,27 @@
+# Logs
+clientlogs
+client*.log
+clientnpm-debug.log*
+clientyarn-debug.log*
+clientyarn-error.log*
+clientpnpm-debug.log*
+clientlerna-debug.log*
+
+clientnode_modules
+clientdist
+clientdist-ssr
+*.local
+
+# Editor directories and files
+client.vscode/*
+client!.vscode/extensions.json
+client.idea
+client.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+server/venv
+server/__pycache__
