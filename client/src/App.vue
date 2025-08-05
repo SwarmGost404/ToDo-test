@@ -1,6 +1,6 @@
 <template>
   <div class="kanban-board">
-    <h1>Канбан-доска (режим реального времени)</h1>
+    <h1>Use your time</h1>
 
     <div class="add-task">
       <input v-model="newTaskTitle" placeholder="Название задачи" @keyup.enter="addTask" />
@@ -72,12 +72,10 @@
       const socket = ref<WebSocket | null>(null)
       const draggedTaskId = ref<string | null>(null)
 
-      // Фильтрация задач по статусу
       const filteredTasks = (status: string) => {
         return tasks.value.filter((task) => task.status === status)
       }
 
-      // Добавление новой задачи
       const addTask = () => {
         if (!newTaskTitle.value.trim()) return
 
@@ -102,7 +100,6 @@
         newTaskDescription.value = ''
       }
 
-      // Начало перетаскивания
       const handleDragStart = (event: DragEvent, taskId: string) => {
         if (event.dataTransfer) {
           event.dataTransfer.setData('text/plain', taskId)
@@ -111,7 +108,6 @@
         }
       }
 
-      // Обработка события drop
       const handleDrop = (event: DragEvent, newStatus: 'todo' | 'in-progress' | 'done') => {
         event.preventDefault()
         const taskId = event.dataTransfer?.getData('text/plain')
@@ -120,7 +116,6 @@
         }
       }
 
-      // Перемещение задачи между колонками
       const moveTask = (taskId: string, newStatus: 'todo' | 'in-progress' | 'done') => {
         if (socket.value?.readyState === WebSocket.OPEN) {
           socket.value.send(
@@ -133,7 +128,6 @@
         }
       }
 
-      // Удаление задачи
       const deleteTask = (taskId: string) => {
         if (confirm('Вы уверены, что хотите удалить эту задачу?')) {
           if (socket.value?.readyState === WebSocket.OPEN) {
@@ -147,7 +141,6 @@
         }
       }
 
-      // Инициализация WebSocket
       const initWebSocket = () => {
         const wsUrl = 'ws://192.168.1.71:8000/ws'
         socket.value = new WebSocket(wsUrl)
@@ -209,7 +202,6 @@
 </script>
 
 <style scoped>
-  /* Стили остаются без изменений */
   .kanban-board {
     padding: 20px;
     font-family: Arial, sans-serif;
@@ -220,7 +212,6 @@
   h1 {
     text-align: center;
     margin-bottom: 30px;
-    color: #333;
   }
 
   .add-task {
@@ -254,7 +245,6 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    transition: background 0.3s;
   }
 
   .add-task button:hover {
