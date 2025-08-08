@@ -14,8 +14,3 @@ npm install
 npm run dev -- --host
 ```
 
-## Or user docker
-```bash
-docker run -d -p 8000:8000 --name kanban-api kanban-api
-docker run -d -p 8080:8080 --name kanban-client kanban-client
-```
