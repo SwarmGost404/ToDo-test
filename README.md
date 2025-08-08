@@ -13,6 +13,8 @@ cd client
 npm install
 npm run dev -- --host
 ```
+### And go for http://localhost:5173
+
 
 ## or use Docker
 ```bash
@@ -24,3 +26,5 @@ docker build -t kanban-api .
 docker run -d -p 8080:8080 --network kanban --name kanban-client kanban-client
 docker run -d -p 8000:8000 --network kanban --name kanban-api kanban-api
 ```
+
+### And go for http://localhost:8080
