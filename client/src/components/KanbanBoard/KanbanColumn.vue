@@ -8,6 +8,7 @@
         :task="task"
         @drag-start="emitDragStart"
         @delete-task="emitDeleteTask"
+        @open-task="onOpenTask"
       />
     </div>
   </div>
@@ -27,6 +28,7 @@ const emit = defineEmits<{
   (e: 'task-dropped', taskId: string, newStatus: Column['status']): void
   (e: 'delete-task', taskId: string): void
   (e: 'drag-start', taskId: string): void
+  (e: 'open-task', taskId: string): void
 }>()
 
 const filteredTasks = computed(() => {
@@ -47,6 +49,9 @@ const emitDeleteTask = (taskId: string) => {
 
 const emitDragStart = (taskId: string) => {
   emit('drag-start', taskId)
+}
+const onOpenTask = (taskId: string) => {
+  emit('open-task', taskId)
 }
 </script>
 

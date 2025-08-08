@@ -26,6 +26,14 @@ export function useWebSocket() {
         }
       } else if (data.type === 'task-deleted') {
         tasks.value = tasks.value.filter((t) => t.id !== data.taskId)
+      } else if (data.type === 'task-updated') {
+        const taskIndex = tasks.value.findIndex((t) => t.id === data.taskId)
+        if (taskIndex !== -1) {
+          tasks.value[taskIndex] = {
+            ...tasks.value[taskIndex],
+            ...data.updates
+          }
+        }
       }
     }
 

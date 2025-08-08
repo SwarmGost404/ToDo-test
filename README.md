@@ -14,3 +14,13 @@ npm install
 npm run dev -- --host
 ```
 
+## or use Docker
+```bash
+docker network create kanban
+cd server
+docker build -t kanban-client .
+cd ../client
+docker build -t kanban-api .
+docker run -d -p 8080:8080 --network kanban --name kanban-client kanban-client
+docker run -d -p 8000:8000 --network kanban --name kanban-api kanban-api
+```

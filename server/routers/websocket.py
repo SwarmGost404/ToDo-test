@@ -66,6 +66,33 @@ async def websocket_endpoint(websocket: WebSocket):
                             "message": f"Task with id {message['taskId']} not found"
                         })
                 
+                elif message["type"] == "edit-task":
+                    task_found = False
+                    for task in tasks_db:
+                        if task["id"] == message["taskId"]:
+                            # Обновляем поля задачи
+                            task["title"] = message["updates"].get("title", task["title"])
+                            task["description"] = message["updates"].get("description", task["description"])
+                            task["updatedAt"] = datetime.now().isoformat()
+                            
+                            task_found = True
+                            await manager.broadcast({
+                                "type": "task-updated",
+                                "taskId": message["taskId"],
+                                "updates": {
+                                    "title": task["title"],
+                                    "description": task["description"],
+                                    "updatedAt": task["updatedAt"]
+                                }
+                            })
+                            break
+                    
+                    if not task_found:
+                        await websocket.send_json({
+                            "type": "error",
+                            "message": f"Task with id {message['taskId']} not found"
+                        })
+
                 else:
                     await websocket.send_json({
                         "type": "error",
