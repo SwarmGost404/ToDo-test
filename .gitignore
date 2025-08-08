@@ -25,3 +25,4 @@ client.DS_Store
 
 server/venv
 server/__pycache__
+*__pycache__

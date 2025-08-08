@@ -30,7 +30,7 @@ const columns: Column[] = [
 
 const { tasks, sendMessage, initWebSocket } = useWebSocket()
 
-initWebSocket('ws://192.168.1.71:8000/ws')
+initWebSocket('ws://localhost:8000/ws')
 
 const handleAddTask = ({ title, description }: { title: string; description: string }) => {
   const newTask: Task = {
