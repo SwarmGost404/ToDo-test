@@ -9,6 +9,7 @@
         @drag-start="emitDragStart"
         @delete-task="emitDeleteTask"
         @open-task="onOpenTask"
+        @edit-task="onEditTask"
       />
     </div>
   </div>
@@ -29,6 +30,7 @@ const emit = defineEmits<{
   (e: 'delete-task', taskId: string): void
   (e: 'drag-start', taskId: string): void
   (e: 'open-task', taskId: string): void
+  (e: "edit-task", task: Task): void
 }>()
 
 const filteredTasks = computed(() => {
@@ -52,6 +54,9 @@ const emitDragStart = (taskId: string) => {
 }
 const onOpenTask = (taskId: string) => {
   emit('open-task', taskId)
+}
+const onEditTask = (task: Task) => {
+  emit("edit-task", task)
 }
 </script>
 

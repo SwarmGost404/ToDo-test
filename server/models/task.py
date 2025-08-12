@@ -8,6 +8,7 @@ tasks_db: List[Dict] = [
         "title": "Пример задачи",
         "description": "Это пример задачи в канбан-доске",
         "status": "todo",
-        "createdAt": datetime.now().isoformat()
+        "createdAt": datetime.now().isoformat(),
+        "color": "status-none"
     }
 ]

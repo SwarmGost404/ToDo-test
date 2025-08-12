@@ -5,6 +5,7 @@
         <div class="modal-header">
           <h3>{{ title }}</h3>
           <button class="close-button" @click="closeModal">&times;</button>
+          <p>{{ color }}</p>
         </div>
         
         <div class="modal-content">
@@ -32,6 +33,10 @@ const props = defineProps({
   isOpen: {
     type: Boolean,
     required: true
+  },
+  color: {
+    type: String,
+    default: "none-status"
   }
 });
 
@@ -66,7 +71,9 @@ const confirmAction = () => {
 }
 
 .modal-container {
-  background: white;
+  border: 3px solid;
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 90%;
@@ -78,7 +85,7 @@ const confirmAction = () => {
 
 .modal-header {
   padding: 16px 20px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 3px solid #000;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -92,7 +99,7 @@ const confirmAction = () => {
 
 .modal-footer {
   padding: 16px 20px;
-  border-top: 1px solid #eee;
+  border-top: 3px solid #000;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
@@ -107,9 +114,11 @@ const confirmAction = () => {
 }
 
 .cancel-button, .confirm-button {
-  padding: 8px 16px;
+  padding: 10px 16px;
   border-radius: 4px;
   cursor: pointer;
+  color: #000;
+  border: solid 3px #000;
 }
 
 .cancel-button {

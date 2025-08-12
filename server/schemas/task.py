@@ -15,6 +15,7 @@ class TaskUpdate(BaseModel):
     title: Optional[str] = None
     description: Optional[str] = None
     status: Optional[str] = None
+    color: str
 
 class Task(TaskBase):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))

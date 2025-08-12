@@ -11,15 +11,14 @@
         @task-dropped="handleTaskDrop"
         @delete-task="handleDeleteTask"
         @open-task="handleOpenTask"
-        @edit-task="handleEditTask"
+        @edit-task="handleEditTask(showTask!)"
       />
     </div>
   </div>
-  
     <ModalWindow 
-      
       :title="showTask?.title || ''"
       :isOpen="showTask !== null"
+      :color="showTask?.color"
       @close="showTask = null"
     >
       <p>{{ showTask?.description }}</p>
@@ -27,8 +26,6 @@
         <button class="edit-btn-in-modal" @click="handleEditTask(showTask!)">Редактировать</button>
       </template>
     </ModalWindow>
-  
-
     <ModalWindow 
       title="Редактировать задачу"
       :isOpen="showEditModal"
@@ -74,6 +71,7 @@ const handleAddTask = ({ title, description }: { title: string; description: str
     description,
     status: 'todo',
     createdAt: Date.now(),
+    color: 'none-status'
   }
   sendMessage({ type: 'add-task', task: newTask })
 }
@@ -83,11 +81,10 @@ const handleTaskDrop = (taskId: string, newStatus: Column['status']) => {
 }
 
 const handleDeleteTask = (taskId: string) => {
-  if (confirm('Вы уверены, что хотите удалить эту задачу?')) {
-    sendMessage({ type: 'delete-task', taskId })
-  }
-}
 
+  sendMessage({ type: 'delete-task', taskId })
+
+}
 
 const handleConfirmEdit = () => {
   if (editingTask.value.id) {
@@ -187,7 +184,7 @@ h1 {
 }
 .edit-btn-in-modal {
   padding: 12px 15px;
-  border: 2px solid #ff9ff3;
+  border: 3px solid #ff9ff3;
   border-radius: 15px;
   background-color: #fafafa;
   color: #000;

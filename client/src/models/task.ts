@@ -3,6 +3,7 @@ export interface Task {
   title: string
   description: string
   status: 'todo' | 'in-progress' | 'done'
+  color: 'status-red' | 'status-green' | 'status-yellow' | 'none-status'
   createdAt: string | number
 }
 

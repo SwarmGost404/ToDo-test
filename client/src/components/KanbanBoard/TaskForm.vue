@@ -44,7 +44,7 @@ const emitAddTask = () => {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 16px; 
 }
 
 .add-task textarea {

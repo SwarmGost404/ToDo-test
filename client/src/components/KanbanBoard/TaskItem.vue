@@ -1,18 +1,25 @@
 <template>
-  <div class="task" draggable="true"  @dragstart="handleDragStart">
+  <div class="task" :class="props.task.color" draggable="true" @click="emitOpenTask" @dragstart="handleDragStart">
     <div class="task-header">
       <h3>{{ task.title }}</h3>
-      <button class="delete-btn" @click="emitDeleteTask">×</button>
-      <button class="edith-btn">
-        <svg width="24" height="24" @click="emitEdithTask" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75 1.84-1.83z" fill="#4285F4"/>
-          <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" fill="#34A853"/>
-          <path d="M20.71 7.04l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75 1.84-1.83c.39-.38.39-1.02 0-1.41z" fill="#FBBC05"/>
-          <path d="M17.81 9.94l-3.75-3.75L3 17.25V21h3.75L17.81 9.94z" fill="#EA4335"/>
-        </svg>
-      </button>
+      <div class="task-hovered-button">
+        <button class="delete-btn" @click="emitDeleteTask" @click.stop="emitDeleteTask">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            <line x1="10" y1="11" x2="10" y2="17"/>
+            <line x1="14" y1="11" x2="14" y2="17"/>
+          </svg>
+        </button>
+        <button @click="emitEdithTask"  class="edith-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+            <path d="M18 13l-1.5-1.5L4 2 2 4l9.5 9.5L13 18z"/>
+          </svg>
+        </button>
+      </div>
+      
     </div>
-    <p>{{ task.description }}</p>
   </div>
 </template>
 
@@ -27,7 +34,7 @@ const emit = defineEmits<{
   (e: 'drag-start', taskId: string): void
   (e: 'delete-task', taskId: string): void
   (e: 'open-task', taskId: string): void
-
+  (e: "edit-task", task: Task): void
 }>()
 
 const handleDragStart = (event: DragEvent) => {
@@ -36,6 +43,10 @@ const handleDragStart = (event: DragEvent) => {
     emit('drag-start', props.task.id)
     event.dataTransfer.effectAllowed = 'move'
   }
+}
+
+const emitOpenTask = (): void => {
+  emit('open-task', props.task.id)
 }
 
 const emitDeleteTask = (): void => {
@@ -50,15 +61,15 @@ const emitEdithTask = (): void => {
 
 <style scoped>
 .task {
-  background: white;
-  border-radius: 6px;
+  border: 3px solid #000;
+  border-radius: 10px;
   padding: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: grab;
 }
 .task:hover{
-  button {
-    display: block;
+  .task-hovered-button {
+    display: flex;
   }
 }
 
@@ -76,20 +87,17 @@ const emitEdithTask = (): void => {
 .task h3 {
   margin: 0;
   font-size: 16px;
-  color: #444;
+  color: #000;
 }
 
-.task p {
-  margin: 0;
-  font-size: 14px;
-  color: #666;
+.task-hovered-button {
+  display: none;
+  margin-right: 10px;
 }
 
 .delete-btn {
-  background: #ff4444;
-  color: white;
+  background-color: transparent;
   border: none;
-  border-radius: 50%;
   width: 24px;
   height: 24px;
   font-size: 16px;
@@ -98,18 +106,35 @@ const emitEdithTask = (): void => {
   align-items: center;
   justify-content: center;
   padding: 0;
-  display: none;
+  color: black;
 }
 .edith-btn {
-  background: white;
+  background-color: transparent;
   border: none;
-  display: none;
-  border-radius: 50%;
   width: 24px;
   height: 24px;
+  cursor: pointer;
+  color: black;
+  margin-left: 10px;
 }
 .edith-btn:hover,
 .delete-btn:hover {
   transform: scale(1.1);
+}
+
+.status-red {
+  background-color: rgb(255, 80, 80);
+}
+
+.status-green {
+  background-color: rgb(73, 255, 73);
+}
+
+.status-yellow {
+  background-color: rgb(255, 255, 95);
+}
+
+.none-status {
+  background-color: #fff;
 }
 </style>
