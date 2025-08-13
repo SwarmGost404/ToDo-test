@@ -72,6 +72,8 @@ const onSetColotTask = (taskId: string, color: string) => {
   border-radius: 8px;
   padding: 15px;
   min-height: 400px;
+  overflow-y: auto;
+  height: 400px;
 }
 
 h2 {

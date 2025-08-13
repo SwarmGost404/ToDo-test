@@ -1,7 +1,7 @@
 <template>
   <div class="kanban-board">
     <h1>Use your time</h1>
-    <TaskForm @add-task="handleAddTask" />
+    
     <div class="columns">
       <KanbanColumn
         v-for="column in columns"
@@ -15,6 +15,7 @@
         @set-color-task="onSetColotTask"
       />
     </div>
+    <TaskForm @add-task="handleAddTask" />
   </div>
     <ModalWindow 
       :title="showTask?.title || ''"
@@ -144,6 +145,7 @@ h1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  margin-bottom: 50px;
 }
 
 @media (max-width: 768px) {
