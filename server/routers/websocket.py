@@ -74,7 +74,8 @@ async def websocket_endpoint(websocket: WebSocket):
                             task["title"] = message["updates"].get("title", task["title"])
                             task["description"] = message["updates"].get("description", task["description"])
                             task["updatedAt"] = datetime.now().isoformat()
-                            
+                            task["color"] = message["updates"].get("color", task["color"])
+
                             task_found = True
                             await manager.broadcast({
                                 "type": "task-updated",
@@ -82,7 +83,8 @@ async def websocket_endpoint(websocket: WebSocket):
                                 "updates": {
                                     "title": task["title"],
                                     "description": task["description"],
-                                    "updatedAt": task["updatedAt"]
+                                    "updatedAt": task["updatedAt"],
+                                    "color": task["color"]
                                 }
                             })
                             break

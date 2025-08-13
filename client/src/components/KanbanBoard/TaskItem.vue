@@ -17,14 +17,31 @@
             <path d="M18 13l-1.5-1.5L4 2 2 4l9.5 9.5L13 18z"/>
           </svg>
         </button>
+        <button class="set-color-btn" @click.stop="isHovered = !isHovered">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12" y2="16"/>
+          </svg>
+        </button>
+        
       </div>
       
+    </div>
+    <div class="hovered-color-panel" v-if="isHovered">
+      <button class="color-button status-red" @click.stop="handleSetColorTask('status-red')"></button>
+      <button class="color-button status-green" @click.stop="handleSetColorTask('status-green')"></button>
+      <button class="color-button status-yellow" @click.stop="handleSetColorTask('status-yellow')"></button>
+      <button class="color-button status-none" @click.stop="handleSetColorTask('status-none')"></button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Task } from '../../models/task'
+import { ref } from 'vue';
+
+const isHovered = ref<boolean>(false)
 
 const props = defineProps<{
   task: Task
@@ -34,7 +51,8 @@ const emit = defineEmits<{
   (e: 'drag-start', taskId: string): void
   (e: 'delete-task', taskId: string): void
   (e: 'open-task', taskId: string): void
-  (e: "edit-task", task: Task): void
+  (e: 'set-color-task', taskID: string, color: string): void
+  (e: 'edit-task', task: Task): void
 }>()
 
 const handleDragStart = (event: DragEvent) => {
@@ -54,8 +72,10 @@ const emitDeleteTask = (): void => {
 }
 
 const emitEdithTask = (): void => {
-  emit('open-task', props.task.id)
-  console.log(props.task.id)
+  emit('edit-task', props.task)
+}
+const handleSetColorTask = (color: string): void => {
+  emit('set-color-task', props.task.id, color)
 }
 </script>
 
@@ -66,7 +86,9 @@ const emitEdithTask = (): void => {
   padding: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: grab;
+  
 }
+
 .task:hover{
   .task-hovered-button {
     display: flex;
@@ -88,38 +110,38 @@ const emitEdithTask = (): void => {
   margin: 0;
   font-size: 16px;
   color: #000;
+  width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .task-hovered-button {
   display: none;
   margin-right: 10px;
+  button {
+    background-color: transparent;
+    border: none;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    margin-right: 10px;
+  }
+  button:hover {
+    transform: scale(1.1);
+  }
 }
 
-.delete-btn {
-  background-color: transparent;
-  border: none;
+.color-button {
   width: 24px;
   height: 24px;
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  color: black;
-}
-.edith-btn {
-  background-color: transparent;
-  border: none;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  color: black;
-  margin-left: 10px;
-}
-.edith-btn:hover,
-.delete-btn:hover {
-  transform: scale(1.1);
+  border: 3px solid #000;
+  border-radius: 50%;
 }
 
 .status-red {
@@ -134,7 +156,8 @@ const emitEdithTask = (): void => {
   background-color: rgb(255, 255, 95);
 }
 
-.none-status {
+.status-none {
   background-color: #fff;
 }
+
 </style>

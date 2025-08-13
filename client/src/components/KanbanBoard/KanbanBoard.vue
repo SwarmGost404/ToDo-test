@@ -12,6 +12,7 @@
         @delete-task="handleDeleteTask"
         @open-task="handleOpenTask"
         @edit-task="handleEditTask(showTask!)"
+        @set-color-task="onSetColotTask"
       />
     </div>
   </div>
@@ -116,6 +117,15 @@ const handleEditTask = (task: Task) => {
   showTask.value = null
 }
 
+const onSetColotTask = (taskId: string, color: string) => {
+  sendMessage({
+    type: 'edit-task',
+    taskId: taskId,
+    updates: {
+      color: color
+    }
+  })
+}
 </script>
 <style scoped>
 .kanban-board {

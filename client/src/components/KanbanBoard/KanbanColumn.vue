@@ -1,4 +1,5 @@
 <template>
+  
   <div class="column" @dragover.prevent @drop="handleDrop">
     <h2>{{ column.title }}</h2>
     <div class="tasks">
@@ -10,6 +11,7 @@
         @delete-task="emitDeleteTask"
         @open-task="onOpenTask"
         @edit-task="onEditTask"
+        @set-color-task="onSetColotTask"
       />
     </div>
   </div>
@@ -31,6 +33,7 @@ const emit = defineEmits<{
   (e: 'drag-start', taskId: string): void
   (e: 'open-task', taskId: string): void
   (e: "edit-task", task: Task): void
+  (e: "set-color-task", taskId: string, color: string): void
 }>()
 
 const filteredTasks = computed(() => {
@@ -57,6 +60,9 @@ const onOpenTask = (taskId: string) => {
 }
 const onEditTask = (task: Task) => {
   emit("edit-task", task)
+}
+const onSetColotTask = (taskId: string, color: string) => {
+  emit("set-color-task", taskId, color)
 }
 </script>
 
